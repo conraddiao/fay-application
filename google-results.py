@@ -4,7 +4,6 @@ import gspread
 from dotenv import load_dotenv
 from oauth2client.service_account import ServiceAccountCredentials
 
-# Load environment variables from .env file
 load_dotenv()
 
 API_KEY = os.getenv("API_KEY")
@@ -54,7 +53,6 @@ def write_to_gsheet(data):
         sheet.append_row(row)
     print(f"Wrote {len(data)} rows to Google Sheet.")
 
-# === MAIN ===
 if __name__ == "__main__":
     query = 'intext:"faynutrition.com/dietitians/"'
     results = google_search(query, num_results=200)
