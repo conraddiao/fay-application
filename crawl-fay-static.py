@@ -4,18 +4,14 @@ from urllib.parse import urljoin, urlparse
 import re
 import time
 
-# Target site and pattern
 base_url = "https://www.faynutrition.com/find"
 # links to appointment pages
 #  target_pattern = re.compile(r"https://provider\.faynutrition\.com/appointments/[\w\-]+", re.IGNORECASE)
-
 # links to dietitian pages
 target_pattern = re.compile(r"/dietitians/.*?", re.IGNORECASE)
 
-# Paths to ignore
 ignored_paths = ["/dietitians", "/specialties", "/insurance", "/modalities"]
 
-# Setup
 visited = set()
 to_visit = [base_url]
 found_links = set()
@@ -28,7 +24,6 @@ def should_ignore(url):
     path = urlparse(url).path
     return any(path.startswith(ignored) for ignored in ignored_paths)
 
-# Crawl loop
 while to_visit:
     current_url = to_visit.pop(0)
     if current_url in visited or should_ignore(current_url):
@@ -42,7 +37,6 @@ while to_visit:
         soup = BeautifulSoup(response.text, "html.parser")
     
         match_count = 0
-        # print(soup)
 
         # Check for appointment links
         for a in soup.find_all("a", href=True):
